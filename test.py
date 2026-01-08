@@ -64,10 +64,9 @@ def main():
     parser.add_argument("--model", default="gemini-2.5-flash-lite", help="Model name")
     args = parser.parse_args()
 
-    # Read API key from env; do NOT hard-code secrets
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
-        raise SystemExit("GOOGLE_API_KEY not set. Export it before running: export GOOGLE_API_KEY=your-key")
+        raise SystemExit("GOOGLE_API_KEY not set. Please set the environment variable and try again.")
 
     data = load_patient(args.json_path)
     model = ChatGoogleGenerativeAI(model=args.model)
