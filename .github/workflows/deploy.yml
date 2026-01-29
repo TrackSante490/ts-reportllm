@@ -11,8 +11,13 @@ jobs:
     steps:
       - name: Update report_gen + restart api
         run: |
-          set -e
+          set -euo pipefail
+          echo "$(date -Is) DEPLOY report_gen from $GITHUB_REPOSITORY@$GITHUB_SHA" >> /srv/capstone/logs/deploy.log
+
           cd /srv/capstone/cappie_run/report_gen
-          git fetch --all
+          git fetch --all --prune
           git reset --hard origin/main
+
+          echo "$GITHUB_SHA" > /srv/capstone/cappie_run/report_gen/.deployed_sha
+
           docker compose -f /srv/capstone/docker-compose.yml restart api
