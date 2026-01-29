@@ -1,24 +1,18 @@
-name: Deploy report_gen to server
+name: Deploy report_gen
 
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches: [ main ]
+  workflow_dispatch: {}
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: SSH deploy
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          port: ${{ secrets.DEPLOY_PORT || 22 }}
-          script: |
-            set -e
-            cd /srv/capstone/cappie_run/report_gen
-            git fetch --all
-            git reset --hard origin/main
-            docker compose -f /srv/capstone/docker-compose.yml restart api
+      - name: Update report_gen + restart api
+        run: |
+          set -e
+          cd /srv/capstone/cappie_run/report_gen
+          git fetch --all
+          git reset --hard origin/main
+          docker compose -f /srv/capstone/docker-compose.yml restart api
