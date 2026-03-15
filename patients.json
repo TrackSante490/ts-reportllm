@@ -5,7 +5,7 @@
   "sex": "M",
   "allergies": ["Penicillin"],
   "medications": ["Metformin 500mg BID", "Atorvastatin 20mg QHS"],
-  "chief_complaint": "Newly noticed dark mole on left forearm",
+  "chief_complaint": "None",
   "history_of_present_illness": "Lesion first noticed 3 months ago; reports gradual enlargement and occasional itching. No bleeding.",
   "past_medical_history": ["Type 2 Diabetes", "Hyperlipidemia"],
   "family_history": ["Mother: melanoma at 61"],
