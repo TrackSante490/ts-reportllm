@@ -16,7 +16,7 @@ Tone: objective, neutral, and clear. Format with short sections and bullet point
 Do not diagnose or prescribe. Instead, describe findings and suggest appropriate next steps or differential *as considerations*, not firm conclusions.
 Do not include any advice to patients—this is clinician-facing.
 Include only information provided or logically implied (no fabrication).
-If info is missing, write “Not provided”.
+For any missing or empty fields in the patient data, write "N/A" in that section rather than skipping it.
 End with a brief 'Next Steps' section phrased as options to consider.
 """
 
@@ -39,7 +39,7 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
 - Keep it to ~200–350 words unless input is very long.
 - Use Markdown with headings.
 - If images/attachments are listed, reference them by name but don’t invent content.
-
+- For any missing or empty field, write "N/A" in that section (e.g., "**Chief Complaint:** N/A").
 Date of report: {today}.
 """
 
