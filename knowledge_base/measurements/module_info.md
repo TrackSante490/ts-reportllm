@@ -70,18 +70,6 @@ Core body temperature.
 
 ---
 
-## Blood Pressure (BP)
-
-**What it measures:**  
-Systolic and diastolic arterial pressure.
-
-**Common relevance:**  
-- Headaches
-- Dizziness
-- Chest discomfort
-- Known hypertension
-- Vision changes
-
 **Important context:**  
 - Body position
 - Recent activity

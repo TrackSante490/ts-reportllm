@@ -54,7 +54,7 @@ The patient data includes:
 - "measurement_runs": list of past measurement sessions with timestamps and vitals
 
 For the Vitals section, write current values AND compare to the baseline. Example format:
-"Current measurements show heart rate of 104 bpm (baseline range 70–85 bpm), temperature of 37.9°C (baseline 36.5–37.2°C), SpO2 of 97% (baseline 97–99%), and blood pressure of 148/94 mmHg (baseline 120–130/80–85 mmHg). Blood pressure appears persistently elevated. Heart rate is higher than baseline."
+"Current measurements show heart rate of 104 bpm (baseline range 70–85 bpm), temperature of 37.9°C (baseline 36.5–37.2°C), SpO2 of 97% (baseline 97–99%). Heart rate is higher than baseline."
 
 - For any missing or empty field, write "N/A" in that section (e.g., "**Chief Complaint:** N/A").
 Date of report: {today}.
