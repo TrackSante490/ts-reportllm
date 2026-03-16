@@ -10,7 +10,7 @@
   "past_medical_history": ["Type 2 Diabetes", "Hyperlipidemia"],
   "family_history": ["Mother: melanoma at 61"],
   "social_history": "Non-smoker, heavy alcohol use, IT desk job.",
-  "vitals": {"bp": "128/78", "hr": 72, "rr": 14, "temp": "36.8C"},
+  "vitals": {"hr": 72, "spo2": 97, "temp": "36.8C"},
   "exam": "4mm asymmetrical pigmented macule on left forearm with irregular borders and color variegation.",
   "attachments": ["photo-left-forearm-2025-11-05.jpg"]
 }

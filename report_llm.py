@@ -24,6 +24,11 @@ When writing the Vitals section, always include trend analysis:
 - Explicitly note if any values are elevated, low, or trending differently than baseline.
 - Example: "Heart rate of 104 bpm is elevated compared to the patient's recent baseline of 70–85 bpm."
 
+When assessing environmental conditions (humidity and CO2):
+- High humidity + poor ventilation = favorable for mold growth
+- Include environmental recommendations only if conditions are concerning
+- Frame as "environmental factors for clinician awareness" not as medical advice
+
 End with a brief 'Next Steps' section phrased as options to consider.
 """
 
@@ -39,13 +44,29 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
   3) History of Present Illness
   4) Relevant History (PMH, FHx, SHx)
   5) Medications & Allergies
-  6) Vitals (with trend analysis compared to baseline and recent sessions)
+  6) Vitals
   7) Physical Exam
-  8) Impression (concise, non-diagnostic; list key positives/negatives)
-  9) Next Steps (options, not directives)
+  8) Environmental Assessment (if humidity or CO2 data present)
+  9) Impression (concise, non-diagnostic; list key positives/negatives)
+  10) Next Steps (options, not directives)
 - Keep it to ~200–350 words unless input is very long.
 - Use Markdown with headings.
-- If images/attachments are listed, reference them by name but don’t invent content.
+- For any missing or empty field, write "N/A" in that section rather than skipping it.
+
+## Environmental Assessment Guidance
+If humidity or CO2 data are present, include this section:
+- Report humidity and CO2 levels as measured
+- Assess environmental conditions:
+  * Humidity >80%: "Critical humidity - excellent conditions for mold growth"
+  * Humidity 70-80%: "High humidity - favorable for mold growth"
+  * Humidity 60-70%: "Elevated humidity - monitor for mold risk"
+  * CO2 >1200 ppm: "Poor ventilation - stagnant air creates mold risk"
+  * CO2 1000-1200 ppm: "Elevated CO2 - consider improving ventilation"
+- If conditions favor mold growth, suggest: improve ventilation (open windows, use fans), use dehumidifier, check for visible mold
+- If conditions are normal, note: "Environmental conditions appear favorable."
+
+Example:
+"Environmental Assessment: Room humidity is 75% and CO2 is 1150 ppm. The combination of elevated humidity and poor ventilation creates favorable conditions for mold growth. Recommend improving air circulation and considering a dehumidifier."
 
 ## Vitals Section Guidance
 The patient data includes:
@@ -54,7 +75,7 @@ The patient data includes:
 - "measurement_runs": list of past measurement sessions with timestamps and vitals
 
 For the Vitals section, write current values AND compare to the baseline. Example format:
-"Current measurements show heart rate of 104 bpm (baseline range 70–85 bpm), temperature of 37.9°C (baseline 36.5–37.2°C), SpO2 of 97% (baseline 97–99%), and blood pressure of 148/94 mmHg (baseline 120–130/80–85 mmHg). Blood pressure appears persistently elevated. Heart rate is higher than baseline."
+"Current measurements show heart rate of 104 bpm (baseline range 70–85 bpm), temperature of 37.9°C (baseline 36.5–37.2°C), SpO2 of 97% (baseline 97–99%). Heart rate is higher than baseline."
 
 - For any missing or empty field, write "N/A" in that section (e.g., "**Chief Complaint:** N/A").
 Date of report: {today}.
