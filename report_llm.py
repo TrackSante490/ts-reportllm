@@ -44,7 +44,7 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
   1) Patient Info
   2) Chief Complaint
   3) History of Present Illness
-  4) Relevant History (PMH, FHx, SHx)
+  4) Relevant History
   5) Medications & Allergies
   6) Vitals
   7) Physical Exam
