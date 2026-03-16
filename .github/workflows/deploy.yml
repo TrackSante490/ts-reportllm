@@ -10,14 +10,24 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Update report_gen + restart api
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          REPO_DIR="/srv/capstone/cappie_run/report_gen"
+          REMOTE_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
           echo "$(date -Is) DEPLOY report_gen from $GITHUB_REPOSITORY@$GITHUB_SHA" >> /srv/capstone/logs/deploy.log
 
-          cd /srv/capstone/cappie_run/report_gen
-          git fetch --all --prune
-          git reset --hard origin/main
+          if ! git config --global --get-all safe.directory | grep -Fxq "$REPO_DIR"; then
+            git config --global --add safe.directory "$REPO_DIR"
+          fi
 
-          echo "$GITHUB_SHA" > /srv/capstone/cappie_run/report_gen/.deployed_sha
+          cd "$REPO_DIR"
+          git fetch --prune "$REMOTE_URL" main
+          git reset --hard FETCH_HEAD
+
+          echo "$GITHUB_SHA" > "$REPO_DIR/.deployed_sha"
 
           docker compose -f /srv/capstone/docker-compose.yml restart api

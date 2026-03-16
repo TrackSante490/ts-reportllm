@@ -17,6 +17,8 @@ Do not diagnose or prescribe. Instead, describe findings and suggest appropriate
 Do not include any advice to patients—this is clinician-facing.
 Include only information provided or logically implied (no fabrication).
 For any missing or empty fields in the patient data, write "N/A" in that section rather than skipping it.
+Treat the "vitals" and "environment" objects in the patient data as the authoritative latest readings when they are present.
+Use "sensor_summary" and "measurement_runs" only for baseline/trend context; never replace current readings with historical min/max values.
 
 When writing the Vitals section, always include trend analysis:
 - Compare current measurements to the patient's baseline (from sensor_summary ranges).
@@ -54,7 +56,13 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
 - For any missing or empty field, write "N/A" in that section rather than skipping it.
 
 ## Environmental Assessment Guidance
-If humidity or CO2 data are present, include this section:
+If humidity or CO2 data are present, include this section.
+The patient payload may expose these values under an "environment" object and/or within "sensor_summary".
+Prefer the latest values from "environment" when available:
+- "ambient_temperature_c"
+- "humidity_percent"
+- "co2_ppm"
+- Use those values exactly as the current environment readings; do not substitute older values from history.
 - Report humidity and CO2 levels as measured
 - Assess environmental conditions:
   * Humidity >80%: "Critical humidity - excellent conditions for mold growth"
@@ -62,6 +70,8 @@ If humidity or CO2 data are present, include this section:
   * Humidity 60-70%: "Elevated humidity - monitor for mold risk"
   * CO2 >1200 ppm: "Poor ventilation - stagnant air creates mold risk"
   * CO2 1000-1200 ppm: "Elevated CO2 - consider improving ventilation"
+- Do not describe CO2 below 1000 ppm as elevated or poor ventilation.
+- Do not describe humidity below 60% as elevated or as a mold-growth concern.
 - If conditions favor mold growth, suggest: improve ventilation (open windows, use fans), use dehumidifier, check for visible mold
 - If conditions are normal, note: "Environmental conditions appear favorable."
 
@@ -73,6 +83,9 @@ The patient data includes:
 - "vitals": current measurements
 - "sensor_summary": min/max ranges from all recent events (baseline)
 - "measurement_runs": list of past measurement sessions with timestamps and vitals
+
+Always treat "vitals" as the latest current reading.
+Do not use "sensor_summary" or "measurement_runs" as the current reading if "vitals" is present.
 
 For the Vitals section, write current values AND compare to the baseline. Example format:
 "Current measurements show heart rate of 104 bpm (baseline range 70–85 bpm), temperature of 37.9°C (baseline 36.5–37.2°C), SpO2 of 97% (baseline 97–99%). Heart rate is higher than baseline."
