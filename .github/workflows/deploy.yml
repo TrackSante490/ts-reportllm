@@ -11,9 +11,12 @@ jobs:
     steps:
       - name: Update report_gen + restart api
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           REPO_DIR="/srv/capstone/cappie_run/report_gen"
+          REMOTE_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
           echo "$(date -Is) DEPLOY report_gen from $GITHUB_REPOSITORY@$GITHUB_SHA" >> /srv/capstone/logs/deploy.log
 
@@ -22,8 +25,8 @@ jobs:
           fi
 
           cd "$REPO_DIR"
-          git fetch --all --prune
-          git reset --hard origin/main
+          git fetch --prune "$REMOTE_URL" main
+          git reset --hard FETCH_HEAD
 
           echo "$GITHUB_SHA" > "$REPO_DIR/.deployed_sha"
 
