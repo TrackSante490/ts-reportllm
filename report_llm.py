@@ -54,7 +54,12 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
 - For any missing or empty field, write "N/A" in that section rather than skipping it.
 
 ## Environmental Assessment Guidance
-If humidity or CO2 data are present, include this section:
+If humidity or CO2 data are present, include this section.
+The patient payload may expose these values under an "environment" object and/or within "sensor_summary".
+Prefer the latest values from "environment" when available:
+- "ambient_temperature_c"
+- "humidity_percent"
+- "co2_ppm"
 - Report humidity and CO2 levels as measured
 - Assess environmental conditions:
   * Humidity >80%: "Critical humidity - excellent conditions for mold growth"
