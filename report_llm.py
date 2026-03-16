@@ -19,6 +19,8 @@ Include only information provided or logically implied (no fabrication).
 For any missing or empty fields in the patient data, write "N/A" in that section rather than skipping it.
 Treat the "vitals" and "environment" objects in the patient data as the authoritative latest readings when they are present.
 Use "sensor_summary" and "measurement_runs" only for baseline/trend context; never replace current readings with historical min/max values.
+When interpreting vital signs, the model must strictly follow the defined threshold rules.
+Do not generalize or reinterpret these thresholds.
 
 When writing the Vitals section, always include trend analysis:
 - Compare current measurements to the patient's baseline (from sensor_summary ranges).
@@ -54,6 +56,22 @@ USER_TEMPLATE = """Create a clinician-facing report from the following structure
 - Keep it to ~200–350 words unless input is very long.
 - Use Markdown with headings.
 - For any missing or empty field, write "N/A" in that section rather than skipping it.
+
+Vital Sign Interpretation Rules:
+
+Oxygen saturation (SpO₂) must be interpreted according to the following guidelines:
+
+- SpO₂ ≥ 95% → within the typical adult range.
+- SpO₂ between 90% and 94% → slightly below the typical adult range.
+- SpO₂ < 90% → low oxygen saturation and should not be described as normal.
+
+The model must NEVER describe SpO₂ below 90% as normal or within normal limits.
+
+If SpO₂ is below 90%, the report should state that oxygen saturation is below the usual adult range and may warrant clinician review.
+
+Do not diagnose the cause of low oxygen saturation.
+The report must not describe SpO₂ below 90% using phrases such as:
+"normal", "within normal limits", "stable oxygenation", or "unremarkable".
 
 ## Environmental Assessment Guidance
 If humidity or CO2 data are present, include this section.
